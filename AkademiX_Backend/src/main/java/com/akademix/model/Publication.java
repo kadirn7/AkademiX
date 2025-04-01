@@ -1,15 +1,21 @@
 package com.akademix.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "publications")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Publication {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,20 +23,14 @@ public class Publication {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, length = 1000)
-    private String summary;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
 
-    @ElementCollection
-    private Set<String> keywords = new HashSet<>();
-
-    @Column(nullable = false)
-    private String fileUrl;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
-    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToMany
@@ -41,7 +41,19 @@ public class Publication {
     )
     private Set<User> likes = new HashSet<>();
 
-    private int viewCount = 0;
-
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 } 
