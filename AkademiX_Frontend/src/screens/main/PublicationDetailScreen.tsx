@@ -14,9 +14,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Ionicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { api, mockApi } from '../../services/api';
+import colors from '../../themes/colors';
 
 type IconName = 'heart' | 'heart-outline';
 
@@ -52,7 +52,7 @@ type PublicationDetailScreenProps = {
 const PublicationDetailScreen: React.FC<PublicationDetailScreenProps> = ({
   navigation,
   route,
-}) => {
+}: PublicationDetailScreenProps) => {
   const { publicationId } = route.params;
   
   const [publication, setPublication] = useState<Publication | null>(null);
@@ -191,7 +191,7 @@ const PublicationDetailScreen: React.FC<PublicationDetailScreenProps> = ({
               {publication.comments.length === 0 ? (
                 <Text style={styles.noCommentsText}>No comments yet. Be the first to comment!</Text>
               ) : (
-                publication.comments.map((comment) => (
+                publication.comments.map((comment: Comment) => (
                   <View key={comment.id} style={styles.commentItem}>
                     <View style={styles.commentHeader}>
                       <Text style={styles.commentAuthor}>{comment.author.name}</Text>
@@ -238,7 +238,7 @@ const PublicationDetailScreen: React.FC<PublicationDetailScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.secondary,
   },
   scrollContainer: {
     padding: 16,
@@ -252,22 +252,22 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: colors.textOnSecondary,
   },
   errorText: {
     fontSize: 16,
-    color: '#ff3b30',
+    color: colors.error,
     textAlign: 'center',
     marginBottom: 16,
   },
   retryButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 5,
   },
   retryButtonText: {
-    color: '#fff',
+    color: colors.textOnPrimary,
     fontWeight: 'bold',
   },
   header: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333',
+    color: colors.textOnSecondary,
   },
   authorContainer: {
     flexDirection: 'row',
@@ -287,28 +287,31 @@ const styles = StyleSheet.create({
   },
   author: {
     fontSize: 16,
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '500',
   },
   date: {
     fontSize: 14,
-    color: '#999',
+    color: colors.textOnSecondary,
+    opacity: 0.7,
   },
   contentContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondaryLight,
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: colors.border.dark,
   },
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: '#333',
+    color: colors.textOnSecondary,
   },
   actionsContainer: {
     flexDirection: 'row',
@@ -323,23 +326,26 @@ const styles = StyleSheet.create({
   actionText: {
     marginLeft: 5,
     fontSize: 14,
-    color: '#666',
+    color: colors.textOnSecondary,
+    opacity: 0.8,
   },
   commentsContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondaryLight,
     borderRadius: 8,
     padding: 16,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: colors.border.dark,
   },
   commentsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: '#333',
+    color: colors.primary,
   },
   commentsLoading: {
     marginVertical: 20,

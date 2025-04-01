@@ -1,31 +1,45 @@
-const { getDefaultConfig } = require('expo/metro-config');
+const { getDefaultConfig } = require('@expo/metro-config');
+const path = require('path');
 
-const config = getDefaultConfig(__dirname);
+// Get the default Metro configuration
+const defaultConfig = getDefaultConfig(__dirname);
 
-// Optimize web bundling
-config.resolver.sourceExts = ['jsx', 'js', 'ts', 'tsx', 'json', 'web.tsx', 'web.ts', 'web.jsx', 'web.js'];
-
-// Add web-specific resolver
-config.resolver.resolveRequest = (context, moduleName, platform) => {
-  if (platform === 'web') {
-    // Try to resolve web-specific files first
-    const webModuleName = moduleName.replace(/\.(js|jsx|ts|tsx)$/, '.web.$1');
-    try {
-      return context.resolveRequest(context, webModuleName, platform);
-    } catch (e) {
-      // If web-specific file doesn't exist, fall back to normal resolution
-    }
-  }
-  return context.resolveRequest(context, moduleName, platform);
-};
-
-// Optimize caching
-config.cacheVersion = '1.0';
-config.maxWorkers = 4;
-config.transformer.minifierConfig = {
-  compress: {
-    drop_console: true,
+// Customize the config
+module.exports = {
+  ...defaultConfig,
+  
+  // Transformer configuration
+  transformer: {
+    ...defaultConfig.transformer,
+    babelTransformerPath: require.resolve('react-native-svg-transformer'),
+    minifierConfig: {
+      keep_classnames: true,
+      keep_fnames: true,
+    },
   },
-};
-
-module.exports = config; 
+  
+  // Resolver configuration
+  resolver: {
+    ...defaultConfig.resolver,
+    assetExts: [...defaultConfig.resolver.assetExts.filter(ext => ext !== 'svg'), 'db', 'ttf', 'otf'],
+    sourceExts: [...defaultConfig.resolver.sourceExts, 'svg', 'cjs'],
+    // Enhance module resolution
+    extraNodeModules: {
+      // Add common aliases
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@screens': path.resolve(__dirname, 'src/screens'),
+      '@navigation': path.resolve(__dirname, 'src/navigation'),
+      '@services': path.resolve(__dirname, 'src/services'),
+      '@themes': path.resolve(__dirname, 'src/themes'),
+      '@assets': path.resolve(__dirname, 'assets'),
+    },
+  },
+  
+  // Increase the worker count for better performance
+  maxWorkers: 4,
+  
+  // Optimize watching
+  watchFolders: [
+    path.resolve(__dirname, '.'),
+  ],
+}; 

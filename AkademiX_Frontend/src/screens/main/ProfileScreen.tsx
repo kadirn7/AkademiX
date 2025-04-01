@@ -21,6 +21,7 @@ import { api } from '../../services/api';
 import PublicationCard from '../../components/PublicationCard';
 import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../themes/colors';
 
 type ProfileScreenProps = {
   navigation: BottomTabNavigationProp<MainTabParamList, 'Profile'>;
@@ -49,7 +50,7 @@ type Publication = {
   comments: any[];
 };
 
-const ProfileScreen: React.FC<ProfileScreenProps> = () => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }: ProfileScreenProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [publications, setPublications] = useState<Publication[]>([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -60,7 +61,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
     institution: '',
     bio: '',
   });
-  const navigation = useNavigation();
 
   const fetchUserProfile = async () => {
     try {
@@ -194,39 +194,44 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: colors.secondary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.secondary,
   },
   profileHeader: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondaryLight,
     padding: 20,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: colors.border.dark,
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
     marginBottom: 15,
+    borderWidth: 3,
+    borderColor: colors.primary,
   },
   userName: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: colors.textOnSecondary,
   },
   userTitle: {
     fontSize: 16,
-    color: '#666',
+    color: colors.primary,
     marginBottom: 10,
   },
   userBio: {
     fontSize: 14,
-    color: '#444',
+    color: colors.textOnSecondary,
+    opacity: 0.8,
     textAlign: 'center',
   },
   publicationsSection: {
@@ -237,22 +242,51 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
+    color: colors.primary,
   },
   emptyText: {
     textAlign: 'center',
-    color: '#666',
+    color: colors.textOnSecondary,
+    opacity: 0.7,
     marginTop: 20,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border.dark,
+    backgroundColor: colors.secondaryLight,
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: colors.textOnSecondary,
+    opacity: 0.8,
   },
   actionButtons: {
     padding: 15,
   },
   createButton: {
     marginBottom: 10,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
+  },
+  createButtonText: {
+    color: colors.textOnPrimary,
   },
   logoutButton: {
-    borderColor: '#ff3b30',
+    borderColor: colors.error,
     borderWidth: 1,
+  },
+  logoutButtonText: {
+    color: colors.error,
   },
 });
 

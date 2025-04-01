@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
+import colors from '../themes/colors';
 
 type Publication = {
   id: number;
@@ -45,11 +46,11 @@ const PublicationCard: React.FC<PublicationCardProps> = ({ publication, onPress 
       
       <View style={styles.footer}>
         <View style={styles.stat}>
-          <Ionicons name="heart-outline" size={16} color="#666" />
+          <Ionicons name="heart-outline" size={16} color={colors.primary} />
           <Text style={styles.statText}>{publication.likes}</Text>
         </View>
         <View style={styles.stat}>
-          <Ionicons name="chatbubble-outline" size={16} color="#666" />
+          <Ionicons name="chatbubble-outline" size={16} color={colors.primary} />
           <Text style={styles.statText}>{publication.comments.length}</Text>
         </View>
       </View>
@@ -59,15 +60,17 @@ const PublicationCard: React.FC<PublicationCardProps> = ({ publication, onPress 
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondary,
     borderRadius: 8,
     padding: 16,
     marginBottom: 10,
-    shadowColor: '#000',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: colors.border.dark,
   },
   header: {
     flexDirection: 'row',
@@ -78,27 +81,32 @@ const styles = StyleSheet.create({
   author: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: colors.primary,
   },
   date: {
     fontSize: 12,
-    color: '#999',
+    color: colors.textOnSecondary,
+    opacity: 0.7,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
-    color: '#333',
+    color: colors.textOnSecondary,
   },
   content: {
     fontSize: 14,
-    color: '#666',
+    color: colors.textOnSecondary,
+    opacity: 0.9,
     lineHeight: 20,
     marginBottom: 12,
   },
   footer: {
     flexDirection: 'row',
     marginTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: colors.border.dark,
+    paddingTop: 12,
   },
   stat: {
     flexDirection: 'row',
@@ -108,7 +116,8 @@ const styles = StyleSheet.create({
   statText: {
     marginLeft: 4,
     fontSize: 14,
-    color: '#666',
+    color: colors.textOnSecondary,
+    opacity: 0.8,
   },
 });
 

@@ -6,6 +6,7 @@ import { MainTabParamList, RootStackParamList } from '../../navigation/AppNaviga
 import { api, mockApi } from '../../services/api';
 import PublicationCard from '../../components/PublicationCard';
 import { FAB } from 'react-native-paper';
+import colors from '../../themes/colors';
 
 type HomeScreenProps = {
   navigation: BottomTabNavigationProp<MainTabParamList, 'Home'>;
@@ -111,7 +112,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.secondary,
   },
   centerContainer: {
     flex: 1,
@@ -122,11 +123,11 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: colors.textOnSecondary,
   },
   errorText: {
     fontSize: 16,
-    color: '#ff3b30',
+    color: colors.error,
     textAlign: 'center',
   },
   emptyContainer: {
@@ -138,12 +139,13 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#666',
+    color: colors.textOnSecondary,
     marginBottom: 10,
   },
   emptySubText: {
     fontSize: 14,
-    color: '#999',
+    color: colors.textOnSecondary,
+    opacity: 0.7,
     textAlign: 'center',
   },
   listContent: {
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
   },
 });
 

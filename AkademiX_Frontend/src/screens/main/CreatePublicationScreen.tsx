@@ -15,13 +15,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { api, mockApi } from '../../services/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../themes/colors';
 
 type CreatePublicationScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, 'CreatePublication'>;
 };
 
-const CreatePublicationScreen: React.FC<CreatePublicationScreenProps> = ({ navigation }) => {
+const CreatePublicationScreen: React.FC<CreatePublicationScreenProps> = ({ navigation }: CreatePublicationScreenProps) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
@@ -140,7 +140,7 @@ const CreatePublicationScreen: React.FC<CreatePublicationScreenProps> = ({ navig
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.secondary,
   },
   scrollContainer: {
     padding: 16,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
-    color: '#333',
+    color: colors.textOnSecondary,
   },
   formField: {
     marginBottom: 20,
@@ -158,37 +158,39 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 8,
-    color: '#333',
+    color: colors.primary,
   },
   input: {
     height: 48,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: colors.border.medium,
     borderRadius: 8,
     paddingHorizontal: 12,
     fontSize: 16,
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondaryLight,
+    color: colors.textOnSecondary,
   },
   textArea: {
     height: 200,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: colors.border.medium,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingTop: 12,
     fontSize: 16,
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondaryLight,
+    color: colors.textOnSecondary,
   },
   inputError: {
-    borderColor: '#ff3b30',
+    borderColor: colors.error,
   },
   errorText: {
-    color: '#ff3b30',
+    color: colors.error,
     fontSize: 14,
     marginTop: 6,
   },
   submitButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     height: 50,
     borderRadius: 8,
     justifyContent: 'center',
@@ -196,10 +198,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   submitButtonDisabled: {
-    backgroundColor: '#999',
+    backgroundColor: colors.primaryDark,
+    opacity: 0.5,
   },
   submitButtonText: {
-    color: '#fff',
+    color: colors.textOnPrimary,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -210,11 +213,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
+    borderColor: colors.border.medium,
+    backgroundColor: 'transparent',
   },
   cancelButtonText: {
-    color: '#666',
+    color: colors.primary,
     fontSize: 16,
   },
 });

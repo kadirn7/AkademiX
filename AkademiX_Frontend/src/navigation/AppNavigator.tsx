@@ -1,8 +1,10 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import TabBarIcon from '../components/TabBarIcons';
+import colors from '../themes/colors';
 
 // Auth screens
 import LoginScreen from '../screens/auth/LoginScreen';
@@ -62,26 +64,96 @@ const MainTabs = () => (
           iconName = focused ? 'person' : 'person-outline';
         }
 
-        return <Ionicons name={iconName as any} size={size} color={color} />;
+        return <TabBarIcon name={iconName} focused={focused} size={size} color={color} />;
       },
-      tabBarActiveTintColor: '#007AFF',
-      tabBarInactiveTintColor: '#666',
-      headerShown: false,
+      tabBarActiveTintColor: colors.primary,
+      tabBarInactiveTintColor: colors.textOnSecondary,
+      tabBarStyle: {
+        backgroundColor: colors.secondary,
+        borderTopColor: colors.border.dark,
+        paddingTop: 5,
+        height: 60,
+      },
+      tabBarLabelStyle: {
+        fontSize: 12,
+        fontWeight: '500',
+        paddingBottom: 5,
+      },
+      headerStyle: {
+        backgroundColor: colors.secondary,
+        shadowColor: colors.shadow.gold,
+        elevation: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.border.dark,
+      },
+      headerTintColor: colors.primary,
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     })}
   >
-    <Tab.Screen name="Home" component={HomeScreen} />
-    <Tab.Screen name="Profile" component={ProfileScreen} />
+    <Tab.Screen 
+      name="Home" 
+      component={HomeScreen}
+      options={{
+        title: "AkademiX",
+        headerShown: true,
+      }}
+    />
+    <Tab.Screen 
+      name="Profile" 
+      component={ProfileScreen}
+      options={{
+        title: "My Profile",
+        headerShown: true,
+      }}
+    />
   </Tab.Navigator>
 );
 
+// Define our own Theme interface that matches what the NavigationContainer expects
+interface NavigationTheme {
+  dark: boolean;
+  colors: {
+    primary: string;
+    background: string;
+    card: string;
+    text: string;
+    border: string;
+    notification: string;
+  };
+}
+
 // Main App Navigator
 const AppNavigator = () => {
+  // Custom NavigationTheme
+  const NavigationTheme: NavigationTheme = {
+    dark: true,
+    colors: {
+      primary: colors.primary,
+      background: colors.background.dark,
+      card: colors.secondary,
+      text: colors.textOnSecondary,
+      border: colors.border.dark,
+      notification: colors.accent,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={NavigationTheme}>
       <Stack.Navigator 
         initialRouteName="Auth"
         screenOptions={{
           headerShown: false,
+          headerStyle: {
+            backgroundColor: colors.secondary,
+            shadowColor: colors.shadow.gold,
+            elevation: 5,
+          },
+          headerTintColor: colors.primary,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         }}
       >
         <Stack.Screen name="Auth" component={AuthStack} />

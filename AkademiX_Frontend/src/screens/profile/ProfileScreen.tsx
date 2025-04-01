@@ -6,6 +6,7 @@ import { api, mockApi } from '../../services/api';
 import { Ionicons } from '@expo/vector-icons';
 import PublicationCard from '../../components/PublicationCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../themes/colors';
 
 // API'den gelen User tipini içe aktarın
 import type { User as ApiUser } from '../../services/api';
@@ -171,7 +172,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={colors.primary} />
         <Text style={styles.loadingText}>Loading profile...</Text>
       </View>
     );
@@ -208,7 +209,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
         </View>
         
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Ionicons name="log-out-outline" size={24} color="#FF3B30" />
+          <Ionicons name="log-out-outline" size={24} color={colors.error} />
         </TouchableOpacity>
       </View>
       
@@ -250,7 +251,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                 onPress={() => handlePublicationPress(item.id)}
               />
             )}
-            contentContainerStyle={styles.listContent}
+            contentContainerStyle={styles.publicationsList}
           />
         )}
       </View>
@@ -261,52 +262,56 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.secondary,
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    backgroundColor: colors.secondary,
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: colors.textOnSecondary,
   },
   errorText: {
     fontSize: 16,
-    color: '#ff3b30',
+    color: colors.error,
     textAlign: 'center',
   },
   profileHeader: {
-    backgroundColor: '#fff',
-    padding: 20,
     flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: colors.secondaryLight,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    position: 'relative',
+    borderBottomColor: colors.border.dark,
   },
   avatarContainer: {
     marginRight: 15,
   },
   avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 2,
+    borderColor: colors.primary,
   },
   avatarPlaceholder: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: '#007AFF',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.primaryDark,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: colors.primary,
   },
   avatarLetters: {
-    color: '#fff',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: colors.textOnPrimary,
   },
   userInfo: {
     flex: 1,
@@ -314,82 +319,90 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 5,
+    color: colors.textOnSecondary,
   },
   userTitle: {
     fontSize: 16,
-    color: '#666',
+    color: colors.primary,
     marginBottom: 2,
   },
   userInstitution: {
     fontSize: 14,
-    color: '#666',
-    marginBottom: 6,
+    color: colors.textOnSecondary,
+    opacity: 0.8,
+    marginBottom: 5,
   },
   userBio: {
     fontSize: 14,
-    color: '#666',
+    color: colors.textOnSecondary,
+    opacity: 0.7,
+    lineHeight: 20,
   },
   logoutButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
+    padding: 10,
   },
   statsContainer: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 10,
+    justifyContent: 'space-around',
+    paddingVertical: 15,
+    backgroundColor: colors.secondaryLight,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: colors.border.dark,
   },
   statItem: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   statValue: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: colors.primary,
   },
   statLabel: {
     fontSize: 12,
-    color: '#666',
+    color: colors.textOnSecondary,
+    opacity: 0.8,
+    marginTop: 2,
   },
   publicationsContainer: {
     flex: 1,
-    padding: 10,
+    padding: 15,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-    marginLeft: 5,
+    marginBottom: 15,
+    color: colors.primary,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingVertical: 30,
   },
   emptyText: {
     fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
+    color: colors.textOnSecondary,
+    opacity: 0.7,
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  publicationsList: {
+    paddingBottom: 20,
   },
   createButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 10,
+    backgroundColor: colors.primary,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    paddingVertical: 12,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   createButtonText: {
-    color: '#fff',
+    color: colors.textOnPrimary,
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  listContent: {
-    paddingBottom: 20,
   },
 });
 
