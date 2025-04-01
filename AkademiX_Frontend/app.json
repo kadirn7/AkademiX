@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "AkademiX",
+    "slug": "akademix",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": null,
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": null,
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": null,
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": null
+    }
+  }
+}
